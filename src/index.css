@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+  background-color: #f0f0f5;
+}
+
+body {
+  font-family: 'Rubik', 'Heebo', system-ui, sans-serif;
+  color: #0a0a1a;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: 'kern';
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.recharts-default-tooltip {
+  border-radius: 12px !important;
+  border: 1px solid #dcdce5 !important;
+  font-family: 'Rubik', sans-serif !important;
+  box-shadow: 0 4px 16px rgba(0, 70, 255, 0.08) !important;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
