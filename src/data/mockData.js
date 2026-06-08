@@ -357,10 +357,198 @@ export const measurement = {
 
 // Per-grade breakdown
 export const byGrade = [
-  { grade: 'ג\'', students: 58, language: 71, math: 66, climate: 4.2, teamResp: 4.0 },
-  { grade: 'ד\'', students: 62, language: 69, math: 63, climate: 4.1, teamResp: 4.1 },
-  { grade: 'ה\'', students: 55, language: 64, math: 58, climate: 4.0, teamResp: 4.1 },
-  { grade: 'ו\'', students: 60, language: 65, math: 60, climate: 4.0, teamResp: 4.2 }
+  { grade: 'ג\'', students: 58, language: 71, math: 66, agency: 4.1, belonging: 4.3 },
+  { grade: 'ד\'', students: 62, language: 69, math: 63, agency: 3.9, belonging: 4.1 },
+  { grade: 'ה\'', students: 55, language: 64, math: 58, agency: 3.7, belonging: 3.9 },
+  { grade: 'ו\'', students: 60, language: 65, math: 60, agency: 3.9, belonging: 4.0 }
+];
+
+// ============================================================
+// STUDENT-LEVEL DATA (ניתוח תלמיד.ה)
+// Six anonymized students at different points in the curve
+// ============================================================
+
+export const students = [
+  {
+    id: 'st-12',
+    label: 'תלמיד.ה #12',
+    grade: 'ה\'',
+    state: 'במגמת שיפור',
+    attendance: 0.93,
+    trajectory: {
+      language: [52, 56, 61, 65, 67, 69],
+      math: [48, 52, 58, 61, 63, 65],
+      quarters: ['Q1·24', 'Q3·24', 'Q1·25', 'Q3·25', 'Q1·26', 'Q3·26']
+    },
+    current: { language: 69, math: 65, agency: 4.1, belonging: 4.3 },
+    radar: [
+      { dim: 'אייג\'נסי', val: 4.1 },
+      { dim: 'שייכות', val: 4.3 },
+      { dim: 'יחסים', val: 4.0 },
+      { dim: 'משמעות למידה', val: 3.9 },
+      { dim: 'מסוגלות עצמית', val: 3.7 },
+      { dim: 'אחריות אישית', val: 4.2 }
+    ],
+    strengths: ['קריאה ביקורתית', 'עבודת קבוצה', 'הצבת יעדים אישיים'],
+    growth: ['ניהול זמן בעבודה עצמאית'],
+    notes: [
+      { date: '23.05', text: 'הציבה לעצמה יעד אישי בתחילת השבוע ועקבה אחריו לבד. סימן מובהק לאייג\'נסי.', author: 'מחנכת השכבה' },
+      { date: '12.05', text: 'התנדבה להוביל פרויקט קבוצתי בשיעור מדעים, סייעה לתלמיד בקצה התחתון.', author: 'מורת מדעים' },
+      { date: '01.05', text: 'בקריאת ספר משותפת התעניינה ושאלה שאלות עומק שלא היו בתוכנית.', author: 'רכזת פדגוגית' }
+    ],
+    actions: [
+      { text: 'יזמת חונכות לתלמידה צעירה בשכבת ג\' · להחתים את ההורים', urgent: true },
+      { text: 'הפניה לסדנה אזורית של חותם למנהיגות צעירה', urgent: false }
+    ]
+  },
+  {
+    id: 'st-07',
+    label: 'תלמיד.ה #07',
+    grade: 'ה\'',
+    state: 'דורש מעקב',
+    attendance: 0.82,
+    trajectory: {
+      language: [46, 48, 47, 50, 52, 51],
+      math: [41, 43, 42, 44, 46, 45],
+      quarters: ['Q1·24', 'Q3·24', 'Q1·25', 'Q3·25', 'Q1·26', 'Q3·26']
+    },
+    current: { language: 51, math: 45, agency: 2.8, belonging: 3.1 },
+    radar: [
+      { dim: 'אייג\'נסי', val: 2.8 },
+      { dim: 'שייכות', val: 3.1 },
+      { dim: 'יחסים', val: 3.5 },
+      { dim: 'משמעות למידה', val: 2.6 },
+      { dim: 'מסוגלות עצמית', val: 2.5 },
+      { dim: 'אחריות אישית', val: 3.0 }
+    ],
+    strengths: ['יצירתיות בעבודות חזותיות', 'קשר חם עם מחנכת'],
+    growth: ['התמדה במשימות', 'תחושת מסוגלות עצמית'],
+    notes: [
+      { date: '20.05', text: 'בחר לא להשתתף במעגל שיח שבועי, נראה מתוסכל מקושי בקריאה.', author: 'רכזת חברתית' },
+      { date: '05.05', text: 'נעדר 3 ימים ברצף, החזרה הייתה קשה. שיחה עם הורים.', author: 'יועצת חינוכית' }
+    ],
+    actions: [
+      { text: 'מסלול תמיכה מתואם של יועצת חינוכית + מחנכת', urgent: true },
+      { text: 'שיחה עם ההורים תוך 10 ימים', urgent: true },
+      { text: 'חיבור להתערבות "חברותא לקריאה" בהובלת תלמיד.ה #12', urgent: false }
+    ]
+  },
+  {
+    id: 'st-23',
+    label: 'תלמיד.ה #23',
+    grade: 'ד\'',
+    state: 'יציב',
+    attendance: 0.96,
+    trajectory: {
+      language: [62, 64, 66, 68, 70, 72],
+      math: [58, 60, 62, 64, 66, 68],
+      quarters: ['Q1·24', 'Q3·24', 'Q1·25', 'Q3·25', 'Q1·26', 'Q3·26']
+    },
+    current: { language: 72, math: 68, agency: 4.0, belonging: 4.4 },
+    radar: [
+      { dim: 'אייג\'נסי', val: 4.0 },
+      { dim: 'שייכות', val: 4.4 },
+      { dim: 'יחסים', val: 4.3 },
+      { dim: 'משמעות למידה', val: 4.0 },
+      { dim: 'מסוגלות עצמית', val: 4.1 },
+      { dim: 'אחריות אישית', val: 4.0 }
+    ],
+    strengths: ['ביטחון בלמידה', 'התמדה'],
+    growth: ['העזה ביצירתיות'],
+    notes: [
+      { date: '21.05', text: 'משתתפת באופן עקבי וענייני, שואלת שאלות מדויקות.', author: 'מחנכת השכבה' }
+    ],
+    actions: [
+      { text: 'לעודד לקיחת תפקיד במועצת תלמידים', urgent: false }
+    ]
+  },
+  {
+    id: 'st-34',
+    label: 'תלמיד.ה #34',
+    grade: 'ו\'',
+    state: 'במגמת שיפור',
+    attendance: 0.89,
+    trajectory: {
+      language: [55, 58, 60, 62, 65, 67],
+      math: [52, 54, 56, 59, 61, 63],
+      quarters: ['Q1·24', 'Q3·24', 'Q1·25', 'Q3·25', 'Q1·26', 'Q3·26']
+    },
+    current: { language: 67, math: 63, agency: 3.8, belonging: 4.0 },
+    radar: [
+      { dim: 'אייג\'נסי', val: 3.8 },
+      { dim: 'שייכות', val: 4.0 },
+      { dim: 'יחסים', val: 3.9 },
+      { dim: 'משמעות למידה', val: 3.7 },
+      { dim: 'מסוגלות עצמית', val: 3.6 },
+      { dim: 'אחריות אישית', val: 4.0 }
+    ],
+    strengths: ['ניתוח טקסטים', 'דיון פתוח'],
+    growth: ['ביטחון במתמטיקה', 'יציאה מאזור הנוחות'],
+    notes: [
+      { date: '18.05', text: 'התקדם משמעותית במתמטיקה אחרי תיאום מסלול תגבור.', author: 'רכזת פדגוגית' }
+    ],
+    actions: [
+      { text: 'המשך מעקב על מסלול תגבור', urgent: false }
+    ]
+  },
+  {
+    id: 'st-41',
+    label: 'תלמיד.ה #41',
+    grade: 'ה\'',
+    state: 'במגמת שיפור',
+    attendance: 0.94,
+    trajectory: {
+      language: [50, 53, 56, 59, 62, 64],
+      math: [47, 50, 53, 56, 58, 60],
+      quarters: ['Q1·24', 'Q3·24', 'Q1·25', 'Q3·25', 'Q1·26', 'Q3·26']
+    },
+    current: { language: 64, math: 60, agency: 3.9, belonging: 4.1 },
+    radar: [
+      { dim: 'אייג\'נסי', val: 3.9 },
+      { dim: 'שייכות', val: 4.1 },
+      { dim: 'יחסים', val: 4.0 },
+      { dim: 'משמעות למידה', val: 3.8 },
+      { dim: 'מסוגלות עצמית', val: 3.7 },
+      { dim: 'אחריות אישית', val: 3.9 }
+    ],
+    strengths: ['התמדה', 'עזרה לחבר.ה'],
+    growth: ['ביטוי בכתב'],
+    notes: [
+      { date: '15.05', text: 'הוביל יוזמה של ניקוי החצר בהפסקה השנייה.', author: 'רכז מעורבות חברתית' }
+    ],
+    actions: [
+      { text: 'חיבור לפעילות חברתית בקהילה הרחבה', urgent: false }
+    ]
+  },
+  {
+    id: 'st-56',
+    label: 'תלמיד.ה #56',
+    grade: 'ג\'',
+    state: 'יציב',
+    attendance: 0.95,
+    trajectory: {
+      language: [68, 70, 71, 72, 73, 74],
+      math: [64, 66, 67, 69, 70, 71],
+      quarters: ['Q1·24', 'Q3·24', 'Q1·25', 'Q3·25', 'Q1·26', 'Q3·26']
+    },
+    current: { language: 74, math: 71, agency: 4.2, belonging: 4.4 },
+    radar: [
+      { dim: 'אייג\'נסי', val: 4.2 },
+      { dim: 'שייכות', val: 4.4 },
+      { dim: 'יחסים', val: 4.3 },
+      { dim: 'משמעות למידה', val: 4.1 },
+      { dim: 'מסוגלות עצמית', val: 4.2 },
+      { dim: 'אחריות אישית', val: 4.3 }
+    ],
+    strengths: ['סקרנות', 'חברתיות'],
+    growth: ['ויסות בעבודה ארוכה'],
+    notes: [
+      { date: '12.05', text: 'הציעה למחנכת רעיון לפעילות שבועית של "ספר השבוע".', author: 'מחנכת השכבה' }
+    ],
+    actions: [
+      { text: 'לעודד כתיבה אישית מעבר לדרישות', urgent: false }
+    ]
+  }
 ];
 
 // Distribution buckets

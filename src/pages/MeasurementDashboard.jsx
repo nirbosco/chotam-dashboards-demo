@@ -1,17 +1,18 @@
 import { useState } from 'react';
 import {
   ResponsiveContainer, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip, Legend,
-  LineChart, Line, ScatterChart, Scatter, ZAxis, ReferenceLine, Cell, ComposedChart, Area
+  LineChart, Line, ScatterChart, Scatter, ZAxis, ReferenceLine, Cell, ComposedChart, Area,
+  RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar
 } from 'recharts';
 import {
   BookOpen, Calculator, TrendingUp, Target, GraduationCap, Sparkles, ArrowLeft,
-  ArrowUpRight, FileText, Activity
+  ArrowUpRight, FileText, Activity, User, AlertTriangle, CheckCircle2, MessageCircle, Search
 } from 'lucide-react';
 import { Card } from '../components/Card.jsx';
 import { MetricTile } from '../components/MetricTile.jsx';
 import { Tabs } from '../components/Tabs.jsx';
 import {
-  schools, measurement, byGrade, distribution, yearTrend, cohortCorrelation, cohortAverages
+  schools, measurement, byGrade, distribution, yearTrend, cohortCorrelation, cohortAverages, students
 } from '../data/mockData.js';
 
 const school = schools.find((s) => s.id === 'ben-zvi');
@@ -19,7 +20,8 @@ const school = schools.find((s) => s.id === 'ben-zvi');
 const TABS = [
   { id: 'school', label: 'מבט בית ספר' },
   { id: 'integration', label: 'שילוב מדדים' },
-  { id: 'cohort', label: 'השוואה במחזור' }
+  { id: 'cohort', label: 'השוואה במחזור' },
+  { id: 'student', label: 'ניתוח תלמיד.ה' }
 ];
 
 export function MeasurementDashboard() {
@@ -33,6 +35,7 @@ export function MeasurementDashboard() {
         {tab === 'school' && <SchoolTab />}
         {tab === 'integration' && <IntegrationTab />}
         {tab === 'cohort' && <CohortTab />}
+        {tab === 'student' && <StudentTab />}
       </div>
     </div>
   );
@@ -116,7 +119,7 @@ function SchoolTab() {
         </Card>
       </div>
 
-      <Card title="פירוט לפי שכבה" subtitle="הקשר בין הישגי כיתה לאקלים ולאחריות הצוותית של הצוות החינוכי של השכבה">
+      <Card title="פירוט לפי שכבה" subtitle="הקשר בין הישגי הלמידה לבין אייג'נסי תלמיד ושייכות לבית הספר ולשכבה">
         <table className="w-full text-sm">
           <thead>
             <tr className="text-right text-[11px] text-chotam-muted border-b border-chotam-line uppercase tracking-wider">
@@ -124,8 +127,8 @@ function SchoolTab() {
               <th className="font-medium pb-2">תלמידים</th>
               <th className="font-medium pb-2">אוריינות שפתית</th>
               <th className="font-medium pb-2">אוריינות מתמטית</th>
-              <th className="font-medium pb-2">אקלים</th>
-              <th className="font-medium pb-2">אחריות צוותית שכבתית</th>
+              <th className="font-medium pb-2">אייג'נסי</th>
+              <th className="font-medium pb-2">שייכות</th>
             </tr>
           </thead>
           <tbody>
@@ -147,14 +150,14 @@ function SchoolTab() {
                 </td>
                 <td className="py-3">
                   <span className="inline-flex items-center gap-2">
-                    <MiniBar value={g.climate} color="bg-chotam-royal" max={5} />
-                    <span className="text-sm font-semibold text-chotam-ink">{g.climate}</span>
+                    <MiniBar value={g.agency} color="bg-chotam-royal" max={5} />
+                    <span className="text-sm font-semibold text-chotam-ink">{g.agency}</span>
                   </span>
                 </td>
                 <td className="py-3">
                   <span className="inline-flex items-center gap-2">
-                    <MiniBar value={g.teamResp} color="bg-chotam-violet" max={5} />
-                    <span className="text-sm font-semibold text-chotam-ink">{g.teamResp}</span>
+                    <MiniBar value={g.belonging} color="bg-chotam-violet" max={5} />
+                    <span className="text-sm font-semibold text-chotam-ink">{g.belonging}</span>
                   </span>
                 </td>
               </tr>
@@ -366,5 +369,193 @@ function MiniBar({ value, color = 'bg-chotam-blue', max = 100 }) {
     <span className="inline-block w-20 h-2 bg-chotam-line rounded-full overflow-hidden align-middle">
       <span className={`block h-full ${color} transition-all`} style={{ width: `${(value / max) * 100}%` }} />
     </span>
+  );
+}
+
+function StateBadge({ state }) {
+  const map = {
+    'במגמת שיפור': 'text-chotam-blue bg-chotam-blue/10',
+    'יציב': 'text-chotam-turquoise bg-chotam-turquoise/15',
+    'דורש מעקב': 'text-chotam-warm bg-chotam-warm/10'
+  };
+  return <span className={`text-[11px] px-2.5 py-1 rounded-full font-semibold ${map[state] || 'text-chotam-muted bg-chotam-paper'}`}>{state}</span>;
+}
+
+function StudentTab() {
+  const [selectedId, setSelectedId] = useState(students[0].id);
+  const student = students.find((s) => s.id === selectedId);
+  const trajectoryData = student.trajectory.quarters.map((q, i) => ({
+    quarter: q,
+    language: student.trajectory.language[i],
+    math: student.trajectory.math[i]
+  }));
+
+  return (
+    <div className="grid grid-cols-4 gap-5">
+      {/* Sidebar: student picker */}
+      <Card title="תלמידות ותלמידים בליווי" subtitle="כל התלמידות והתלמידים בשכבות ג'-ו'. בחירה פותחת פרופיל מלא." className="col-span-1">
+        <div className="relative mb-3">
+          <Search className="w-4 h-4 absolute right-2.5 top-1/2 -translate-y-1/2 text-chotam-muted" />
+          <input
+            type="text"
+            placeholder="חיפוש לפי מספר או שכבה"
+            disabled
+            className="w-full text-sm bg-chotam-paper border border-chotam-line rounded-chotamSm py-2 pr-9 pl-3 text-chotam-muted"
+          />
+        </div>
+        <div className="space-y-2">
+          {students.map((s) => (
+            <button
+              key={s.id}
+              onClick={() => setSelectedId(s.id)}
+              className={`w-full text-right rounded-chotamSm p-3 border transition-all ${
+                s.id === selectedId
+                  ? 'border-chotam-blue bg-chotam-blue/5'
+                  : 'border-chotam-line bg-white hover:border-chotam-blue/30 hover:bg-chotam-paper/50'
+              }`}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <div className="flex items-center gap-2 min-w-0">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold shrink-0 ${
+                    s.id === selectedId ? 'bg-chotam-blue text-white' : 'bg-chotam-paper text-chotam-blue'
+                  }`}>{s.grade}</div>
+                  <div className="min-w-0">
+                    <div className="text-sm font-semibold text-chotam-ink truncate">{s.label}</div>
+                    <div className="text-[11px] text-chotam-muted">שכבה {s.grade} · נוכחות {Math.round(s.attendance * 100)}%</div>
+                  </div>
+                </div>
+                <StateBadge state={s.state} />
+              </div>
+            </button>
+          ))}
+        </div>
+      </Card>
+
+      {/* Main: student profile */}
+      <div className="col-span-3 space-y-5">
+        {/* Profile header */}
+        <div className="bg-chotam-blue text-white rounded-chotam p-6 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-72 h-72 bg-chotam-royal/40 rounded-full -translate-y-1/2 -translate-x-1/2 blur-3xl pointer-events-none" />
+          <div className="relative flex items-start justify-between gap-6">
+            <div>
+              <div className="flex items-center gap-2 text-xs text-white/70 font-medium">
+                <User className="w-3 h-3" />
+                <span>פרופיל אנונימי · נתונים מוצגים בכפוף להגנת פרטיות</span>
+              </div>
+              <h2 className="text-2xl font-bold mt-2 tracking-tight">{student.label}</h2>
+              <p className="text-sm text-white/80 mt-1.5">
+                שכבה {student.grade} · {school.name} · נוכחות שנתית {Math.round(student.attendance * 100)}% · מסומן.ת ב<strong className="text-white">{student.state}</strong>
+              </p>
+            </div>
+            <button className="inline-flex items-center gap-2 bg-white/10 backdrop-blur hover:bg-white/20 text-white text-sm font-semibold px-4 py-2 rounded-chotamSm transition-colors">
+              <FileText className="w-4 h-4" />
+              ייצוא פרופיל ליועצת
+            </button>
+          </div>
+        </div>
+
+        {/* Four-KPI strip */}
+        <div className="grid grid-cols-4 gap-3">
+          <MetricTile label="אוריינות שפתית" value={student.current.language} accent="blue" big />
+          <MetricTile label="אוריינות מתמטית" value={student.current.math} accent="cyan" big />
+          <MetricTile label="אייג'נסי" value={student.current.agency} max={5} accent="royal" big />
+          <MetricTile label="שייכות" value={student.current.belonging} max={5} accent="violet" big />
+        </div>
+
+        {/* Trajectory + Radar */}
+        <div className="grid grid-cols-5 gap-5">
+          <Card title="מסלול למידה" subtitle="התקדמות לאורך 6 רבעונים, באוריינות שפתית ובאוריינות מתמטית" className="col-span-3">
+            <ResponsiveContainer width="100%" height={250}>
+              <LineChart data={trajectoryData}>
+                <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
+                <XAxis dataKey="quarter" tick={{ fontSize: 11, fill: '#6b6b80', fontFamily: 'Rubik' }} />
+                <YAxis tick={{ fontSize: 11, fill: '#6b6b80', fontFamily: 'Rubik' }} domain={[30, 80]} />
+                <Tooltip />
+                <Legend wrapperStyle={{ fontSize: 12, fontFamily: 'Rubik' }} />
+                <Line type="monotone" dataKey="language" name="אוריינות שפתית" stroke="#0046ff" strokeWidth={3} dot={{ r: 4, fill: '#0046ff' }} />
+                <Line type="monotone" dataKey="math" name="אוריינות מתמטית" stroke="#0fb4f5" strokeWidth={3} dot={{ r: 4, fill: '#0fb4f5' }} />
+              </LineChart>
+            </ResponsiveContainer>
+          </Card>
+
+          <Card title="פרופיל SEL ואייג'נסי" subtitle="ששת המימדים האישיים" className="col-span-2">
+            <ResponsiveContainer width="100%" height={250}>
+              <RadarChart data={student.radar}>
+                <PolarGrid stroke="#dcdce5" />
+                <PolarAngleAxis dataKey="dim" tick={{ fontSize: 10, fill: '#0a0a1a', fontFamily: 'Rubik', fontWeight: 600 }} />
+                <PolarRadiusAxis domain={[0, 5]} tick={{ fontSize: 9, fill: '#6b6b80' }} />
+                <Radar name="הקריאה הנוכחית" dataKey="val" stroke="#6437eb" fill="#6437eb" fillOpacity={0.35} strokeWidth={2} />
+              </RadarChart>
+            </ResponsiveContainer>
+          </Card>
+        </div>
+
+        {/* Strengths + Growth + Notes + Actions */}
+        <div className="grid grid-cols-3 gap-5">
+          <Card title="חזקות וצמיחה" subtitle="מבט מתוך התצפיות והשיחות עם הצוות">
+            <div>
+              <div className="text-[11px] uppercase tracking-wider text-chotam-turquoise font-semibold mb-2">חזקות</div>
+              <ul className="space-y-1.5">
+                {student.strengths.map((s, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-chotam-turquoise mt-0.5 shrink-0" />
+                    <span className="text-chotam-ink leading-snug">{s}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="mt-4 pt-4 border-t border-chotam-line">
+              <div className="text-[11px] uppercase tracking-wider text-chotam-warm font-semibold mb-2">תחומי צמיחה</div>
+              <ul className="space-y-1.5">
+                {student.growth.map((g, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm">
+                    <Activity className="w-3.5 h-3.5 text-chotam-warm mt-0.5 shrink-0" />
+                    <span className="text-chotam-ink leading-snug">{g}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </Card>
+
+          <Card title="תצפיות ושיחות אחרונות" subtitle="מאסופות הצוות החינוכי וצוות הליווי">
+            <div className="space-y-3">
+              {student.notes.map((n, i) => (
+                <div key={i} className="border-r-2 border-chotam-blue pr-3 py-1">
+                  <div className="flex items-baseline justify-between">
+                    <span className="text-[11px] text-chotam-muted font-medium">{n.author}</span>
+                    <span className="text-[11px] text-chotam-blue font-semibold">{n.date}</span>
+                  </div>
+                  <div className="text-[13px] text-chotam-ink mt-1 leading-relaxed">{n.text}</div>
+                </div>
+              ))}
+            </div>
+          </Card>
+
+          <Card title="המלצות אופרטיביות" subtitle="פעולות לדיון בפגישת הצוות הקרובה">
+            <div className="space-y-2.5">
+              {student.actions.map((a, i) => (
+                <div key={i} className="flex items-start gap-2.5">
+                  <input type="checkbox" className="mt-1 w-3.5 h-3.5 accent-chotam-blue" />
+                  <div className="flex-1">
+                    <div className="text-sm text-chotam-ink leading-snug">{a.text}</div>
+                    {a.urgent && (
+                      <span className="inline-flex items-center gap-1 text-[10px] text-chotam-warm font-semibold uppercase tracking-wider mt-1">
+                        <AlertTriangle className="w-3 h-3" />
+                        דחוף
+                      </span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Card>
+        </div>
+
+        {/* Footer note */}
+        <div className="bg-chotam-paper rounded-chotamSm border border-chotam-line p-4 text-xs text-chotam-muted leading-relaxed">
+          <strong className="text-chotam-slate">הערת פרטיות:</strong> נתוני התלמידות והתלמידים נשמרים במאגר מאובטח של חותם. גישה לפרופיל מלא נשמרת רק לצוות החינוכי של בית הספר, ליועצת, ולמלווה הבית ספרי. כל ייצוא מתועד ביומן ביקורת. המוצג כאן הוא דמו אנונימי לצורך הדגמת היכולות.
+        </div>
+      </div>
+    </div>
   );
 }
