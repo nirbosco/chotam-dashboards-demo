@@ -89,37 +89,38 @@ function KPIs() {
 function SchoolTab() {
   return (
     <div className="space-y-5">
-      <div className="grid grid-cols-2 gap-5">
-        <Card title="התפלגות אוריינות שפתית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
-          <ResponsiveContainer width="100%" height={240}>
-            <BarChart data={distribution.language}>
-              <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
-              <XAxis dataKey="bucket" tick={{ fontSize: 12, fill: '#0a0a1a', fontFamily: 'Rubik', fontWeight: 500 }} />
-              <YAxis tick={{ fontSize: 11, fill: '#6b6b80', fontFamily: 'Rubik' }} unit="%" />
-              <Tooltip />
-              <Legend wrapperStyle={{ fontSize: 11, fontFamily: 'Rubik' }} />
-              <Bar dataKey="baseline" name="בסיס תחילת מחזור" fill="#dcdce5" radius={[6, 6, 0, 0]} />
-              <Bar dataKey="current" name="עכשיו" fill="#0046ff" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </Card>
+      <div className="grid grid-cols-5 gap-5">
+        <div className="col-span-2 space-y-5">
+          <Card title="התפלגות אוריינות שפתית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
+            <ResponsiveContainer width="100%" height={210}>
+              <BarChart data={distribution.language}>
+                <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
+                <XAxis dataKey="bucket" tick={{ fontSize: 11, fill: '#0a0a1a', fontFamily: 'Rubik', fontWeight: 500 }} />
+                <YAxis tick={{ fontSize: 11, fill: '#6b6b80', fontFamily: 'Rubik' }} unit="%" />
+                <Tooltip />
+                <Legend wrapperStyle={{ fontSize: 11, fontFamily: 'Rubik' }} />
+                <Bar dataKey="baseline" name="בסיס" fill="#dcdce5" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="current" name="עכשיו" fill="#0046ff" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
 
-        <Card title="התפלגות אוריינות מתמטית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
-          <ResponsiveContainer width="100%" height={240}>
-            <BarChart data={distribution.math}>
-              <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
-              <XAxis dataKey="bucket" tick={{ fontSize: 12, fill: '#0a0a1a', fontFamily: 'Rubik', fontWeight: 500 }} />
-              <YAxis tick={{ fontSize: 11, fill: '#6b6b80', fontFamily: 'Rubik' }} unit="%" />
-              <Tooltip />
-              <Legend wrapperStyle={{ fontSize: 11, fontFamily: 'Rubik' }} />
-              <Bar dataKey="baseline" name="בסיס תחילת מחזור" fill="#dcdce5" radius={[6, 6, 0, 0]} />
-              <Bar dataKey="current" name="עכשיו" fill="#0fb4f5" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </Card>
-      </div>
+          <Card title="התפלגות אוריינות מתמטית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
+            <ResponsiveContainer width="100%" height={210}>
+              <BarChart data={distribution.math}>
+                <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
+                <XAxis dataKey="bucket" tick={{ fontSize: 11, fill: '#0a0a1a', fontFamily: 'Rubik', fontWeight: 500 }} />
+                <YAxis tick={{ fontSize: 11, fill: '#6b6b80', fontFamily: 'Rubik' }} unit="%" />
+                <Tooltip />
+                <Legend wrapperStyle={{ fontSize: 11, fontFamily: 'Rubik' }} />
+                <Bar dataKey="baseline" name="בסיס" fill="#dcdce5" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="current" name="עכשיו" fill="#0fb4f5" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          </Card>
+        </div>
 
-      <Card title="פירוט לפי שכבה" subtitle="הקשר בין הישגי הלמידה לבין אייג'נסי תלמיד ושייכות לבית הספר ולשכבה">
+        <Card title="פירוט לפי שכבה" subtitle="הקשר בין הישגי הלמידה לבין אייג'נסי תלמיד ושייכות לבית הספר ולשכבה" className="col-span-3">
         <table className="w-full text-sm">
           <thead>
             <tr className="text-right text-[11px] text-chotam-muted border-b border-chotam-line uppercase tracking-wider">
@@ -165,6 +166,7 @@ function SchoolTab() {
           </tbody>
         </table>
       </Card>
+      </div>
 
       <Card
         title="קריאת נתונים · מבט המלווה הבית ספרי"
@@ -173,7 +175,7 @@ function SchoolTab() {
       >
         <div className="space-y-3 text-sm text-chotam-ink leading-relaxed">
           <p>
-            <strong className="text-chotam-blue">הקשר הבולט:</strong> בשכבת ה' רמת ההישגים נמוכה ביחס לשאר השכבות. במקביל, מדד האקלים והאחריות הצוותית של צוות השכבה נמוכים יותר. הקשר עולה גם בשכבות אחרות במחזור, ומחזק את הקריאה שמסוגלות צוותית קודמת להישגים.
+            <strong className="text-chotam-blue">הקשר הבולט:</strong> בשכבת ה' רמת ההישגים נמוכה ביחס לשאר השכבות. במקביל, מדדי האייג'נסי והשייכות של תלמידי השכבה נמוכים יותר. הקשר עולה גם בשכבות אחרות במחזור, ומחזק את הקריאה שאייג'נסי ושייכות הם תנאים מקדמים להישגים.
           </p>
           <p>
             <strong className="text-chotam-blue">תזוזה לחיוב:</strong> שיעור התלמידים בקצה התחתון של ההתפלגות באוריינות המתמטית ירד מ-32% ל-18%. הירידה הזו תואמת זמנית את הפעלת שגרת התכנון המשותף של רכזת פדגוגית עם צוותי השכבות, שהתחילה ברבעון Q4 של 2025.

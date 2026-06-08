@@ -52,6 +52,26 @@ async function run() {
   await page.screenshot({ path: `${OUT_DIR}/12-measurement-cohort.png`, fullPage: true });
   console.log('Saved 12-measurement-cohort.png');
 
+  // Click "ניתוח תלמיד.ה"
+  await page.evaluate(() => {
+    const buttons = Array.from(document.querySelectorAll('button'));
+    const target = buttons.find((b) => b.textContent.trim() === 'ניתוח תלמיד.ה');
+    if (target) target.click();
+  });
+  await sleep(2000);
+  await page.screenshot({ path: `${OUT_DIR}/13-measurement-student.png`, fullPage: true });
+  console.log('Saved 13-measurement-student.png');
+
+  // Click second student (דורש מעקב) to show different state
+  await page.evaluate(() => {
+    const sidebarButtons = Array.from(document.querySelectorAll('button'));
+    const target = sidebarButtons.find((b) => b.textContent.includes('תלמיד.ה #07'));
+    if (target) target.click();
+  });
+  await sleep(1500);
+  await page.screenshot({ path: `${OUT_DIR}/14-measurement-student-attention.png`, fullPage: true });
+  console.log('Saved 14-measurement-student-attention.png');
+
   await browser.close();
   console.log('Done');
 }
