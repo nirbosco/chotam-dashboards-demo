@@ -9,7 +9,7 @@ import { PlaceholderPage } from './pages/PlaceholderPage.jsx';
 const BREADCRUMBS = {
   authority: 'רשות לדוגמה · מבט מערכתי',
   school: 'בית ספר לדוגמה · מבט מנהלת',
-  measurement: 'מדידה והערכה · שפה, מתמטיקה ומדדי חותם',
+  measurement: 'מדידה והערכה · אוריינות שפתית ומתמטית ומדדי חותם',
   agent: 'סוכן חכם',
   admin: 'ניהול מערכת',
   institutions: 'ניהול מוסדות',

@@ -55,7 +55,7 @@ function Hero() {
           מדידה והערכה · {school.name}
         </h1>
         <p className="text-sm text-white/80 mt-1.5 leading-relaxed max-w-3xl">
-          הישגי שפת אם ומתמטיקה, משולבים עם מדדי האחריות הצוותית, האקלים, ומעורבות ההורים. עבור צוות בית הספר ועמית.ת הליווי, ההישגים אינם נמדדים בפני עצמם אלא נקראים יחד עם השכבה התשתיתית שמייצרת אותם.
+          הישגי אוריינות שפתית ומתמטית, משולבים עם מדדי האחריות הצוותית, האקלים, ומעורבות ההורים. עבור צוות בית הספר ועמית.ת הליווי, ההישגים אינם נמדדים בפני עצמם אלא נקראים יחד עם השכבה התשתיתית שמייצרת אותם.
         </p>
         <div className="mt-3 flex flex-wrap items-center gap-2 text-[11px]">
           <span className="text-white/70">מקורות:</span>
@@ -75,8 +75,8 @@ function KPIs() {
   const { current, baseline, target } = measurement;
   return (
     <div className="grid grid-cols-4 gap-3">
-      <MetricTile label="שפת אם · ממוצע" value={current.languageAvg} baseline={baseline.languageAvg} target={target.languageAvg} accent="blue" big />
-      <MetricTile label="מתמטיקה · ממוצע" value={current.mathAvg} baseline={baseline.mathAvg} target={target.mathAvg} accent="cyan" big />
+      <MetricTile label="אוריינות שפתית · ממוצע" value={current.languageAvg} baseline={baseline.languageAvg} target={target.languageAvg} accent="blue" big />
+      <MetricTile label="אוריינות מתמטית · ממוצע" value={current.mathAvg} baseline={baseline.mathAvg} target={target.mathAvg} accent="cyan" big />
       <MetricTile label="מעל סף בסיסי" value={current.aboveBasic} unit="%" baseline={baseline.aboveBasic} target={target.aboveBasic} accent="turquoise" big />
       <MetricTile label="שונות פנים-בית-ספרית" value={current.variance} unit="נק'" baseline={baseline.variance} target={target.variance} accent="royal" big subtle="נמוך יותר = פער קטן יותר בין רבעוני התלמידים" />
     </div>
@@ -87,7 +87,7 @@ function SchoolTab() {
   return (
     <div className="space-y-5">
       <div className="grid grid-cols-2 gap-5">
-        <Card title="התפלגות שפת אם" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
+        <Card title="התפלגות אוריינות שפתית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={distribution.language}>
               <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
@@ -101,7 +101,7 @@ function SchoolTab() {
           </ResponsiveContainer>
         </Card>
 
-        <Card title="התפלגות מתמטיקה" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
+        <Card title="התפלגות אוריינות מתמטית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
           <ResponsiveContainer width="100%" height={240}>
             <BarChart data={distribution.math}>
               <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
@@ -122,8 +122,8 @@ function SchoolTab() {
             <tr className="text-right text-[11px] text-chotam-muted border-b border-chotam-line uppercase tracking-wider">
               <th className="font-medium pb-2 pr-2">שכבה</th>
               <th className="font-medium pb-2">תלמידים</th>
-              <th className="font-medium pb-2">שפת אם</th>
-              <th className="font-medium pb-2">מתמטיקה</th>
+              <th className="font-medium pb-2">אוריינות שפתית</th>
+              <th className="font-medium pb-2">אוריינות מתמטית</th>
               <th className="font-medium pb-2">אקלים</th>
               <th className="font-medium pb-2">אחריות צוותית שכבתית</th>
             </tr>
@@ -173,7 +173,7 @@ function SchoolTab() {
             <strong className="text-chotam-blue">הקשר הבולט:</strong> בשכבת ה' רמת ההישגים נמוכה ביחס לשאר השכבות. במקביל, מדד האקלים והאחריות הצוותית של צוות השכבה נמוכים יותר. הקשר עולה גם בשכבות אחרות במחזור, ומחזק את הקריאה שמסוגלות צוותית קודמת להישגים.
           </p>
           <p>
-            <strong className="text-chotam-blue">תזוזה לחיוב:</strong> שיעור התלמידים בקצה התחתון של ההתפלגות במתמטיקה ירד מ-32% ל-18%. הירידה הזו תואמת זמנית את הפעלת שגרת התכנון המשותף של רכזת פדגוגית עם צוותי השכבות, שהתחילה ברבעון Q4 של 2025.
+            <strong className="text-chotam-blue">תזוזה לחיוב:</strong> שיעור התלמידים בקצה התחתון של ההתפלגות באוריינות המתמטית ירד מ-32% ל-18%. הירידה הזו תואמת זמנית את הפעלת שגרת התכנון המשותף של רכזת פדגוגית עם צוותי השכבות, שהתחילה ברבעון Q4 של 2025.
           </p>
           <p>
             <strong className="text-chotam-blue">המלצה לפגישה הקרובה:</strong> לבחון עם רכזת השכבה של ה' איזה תיקוף נדרש לצוות החינוכי כדי לחזק את האחריות ההדדית, מתוך הנחה שזה התנאי המקדים לשיפור במדידה הבאה.
@@ -203,8 +203,8 @@ function IntegrationTab() {
                     <div className="font-bold text-chotam-ink text-base">{label}</div>
                     <div className="text-xs text-chotam-blue font-medium mt-1">{d.milestone}</div>
                     <div className="mt-2 pt-2 border-t border-chotam-line space-y-1 text-xs">
-                      <div>שפת אם: <strong>{d.language}</strong></div>
-                      <div>מתמטיקה: <strong>{d.math}</strong></div>
+                      <div>אוריינות שפתית: <strong>{d.language}</strong></div>
+                      <div>אוריינות מתמטית: <strong>{d.math}</strong></div>
                       <div>אחריות צוותית: <strong>{d.teamResp}/5</strong></div>
                       <div>אקלים: <strong>{d.climate}/5</strong></div>
                     </div>
@@ -213,8 +213,8 @@ function IntegrationTab() {
               }}
             />
             <Legend wrapperStyle={{ fontSize: 12, fontFamily: 'Rubik' }} />
-            <Bar yAxisId="left" dataKey="language" name="שפת אם" fill="#0046ff" radius={[6, 6, 0, 0]} barSize={28} />
-            <Bar yAxisId="left" dataKey="math" name="מתמטיקה" fill="#0fb4f5" radius={[6, 6, 0, 0]} barSize={28} />
+            <Bar yAxisId="left" dataKey="language" name="אוריינות שפתית" fill="#0046ff" radius={[6, 6, 0, 0]} barSize={28} />
+            <Bar yAxisId="left" dataKey="math" name="אוריינות מתמטית" fill="#0fb4f5" radius={[6, 6, 0, 0]} barSize={28} />
             <Line yAxisId="right" type="monotone" dataKey="teamResp" name="אחריות צוותית" stroke="#6437eb" strokeWidth={3} dot={{ r: 5, fill: '#6437eb' }} />
             <Line yAxisId="right" type="monotone" dataKey="climate" name="אקלים" stroke="#23d7cd" strokeWidth={3} dot={{ r: 5, fill: '#23d7cd' }} />
           </ComposedChart>
@@ -234,45 +234,45 @@ function IntegrationTab() {
 
       <div className="grid grid-cols-2 gap-5">
         <CorrelationScatter
-          title="אחריות צוותית ↔ הישגי מתמטיקה"
+          title="אחריות צוותית ↔ אוריינות מתמטית"
           subtitle="כל נקודה היא בית ספר במחזור. כיוון העלייה מצביע על הקשר."
           xKey="teamResp"
           yKey="math"
           xLabel="אחריות צוותית /5"
-          yLabel="מתמטיקה"
+          yLabel="אוריינות מתמטית"
           color="#0046ff"
           xDomain={[3, 5]}
           yDomain={[40, 75]}
         />
         <CorrelationScatter
-          title="אקלים ↔ הישגי שפת אם"
-          subtitle="הקשר בין אקלים בית ספרי לבין הישגי שפה"
+          title="אקלים ↔ אוריינות שפתית"
+          subtitle="הקשר בין אקלים בית ספרי לבין אוריינות שפתית"
           xKey="climate"
           yKey="language"
           xLabel="אקלים /5"
-          yLabel="שפת אם"
+          yLabel="אוריינות שפתית"
           color="#0fb4f5"
           xDomain={[3, 5]}
           yDomain={[40, 80]}
         />
         <CorrelationScatter
-          title="מעורבות הורים ↔ הישגי מתמטיקה"
-          subtitle="הקשר בין מעורבות הורים פעילה לבין הישגי מתמטיקה"
+          title="מעורבות הורים ↔ אוריינות מתמטית"
+          subtitle="הקשר בין מעורבות הורים פעילה לבין אוריינות מתמטית"
           xKey="parentEng"
           yKey="math"
           xLabel="מעורבות הורים /5"
-          yLabel="מתמטיקה"
+          yLabel="אוריינות מתמטית"
           color="#23d7cd"
           xDomain={[2, 5]}
           yDomain={[40, 75]}
         />
         <CorrelationScatter
-          title="אייג'נסי תלמיד ↔ הישגי שפת אם"
-          subtitle="הקשר בין אייג'נסי תלמיד לבין הישגי שפה"
+          title="אייג'נסי ↔ אוריינות שפתית"
+          subtitle="הקשר בין אייג'נסי תלמיד לבין הישגי אוריינות שפתית"
           xKey="agency"
           yKey="language"
           xLabel="אייג'נסי /5"
-          yLabel="שפת אם"
+          yLabel="אוריינות שפתית"
           color="#6437eb"
           xDomain={[3, 5]}
           yDomain={[40, 80]}
@@ -322,15 +322,15 @@ function CohortTab() {
             <YAxis tick={{ fontSize: 11, fill: '#6b6b80', fontFamily: 'Rubik' }} domain={[0, 80]} />
             <Tooltip />
             <Legend wrapperStyle={{ fontSize: 12, fontFamily: 'Rubik' }} />
-            <ReferenceLine y={cohortAverages.national.language} stroke="#e63946" strokeDasharray="4 4" label={{ value: 'ממוצע ארצי שפה', fill: '#e63946', fontSize: 10, position: 'insideTopRight' }} />
-            <Bar dataKey="language" name="שפת אם" fill="#0046ff" radius={[6, 6, 0, 0]} />
-            <Bar dataKey="math" name="מתמטיקה" fill="#0fb4f5" radius={[6, 6, 0, 0]} />
+            <ReferenceLine y={cohortAverages.national.language} stroke="#e63946" strokeDasharray="4 4" label={{ value: 'ממוצע ארצי אוריינות', fill: '#e63946', fontSize: 10, position: 'insideTopRight' }} />
+            <Bar dataKey="language" name="אוריינות שפתית" fill="#0046ff" radius={[6, 6, 0, 0]} />
+            <Bar dataKey="math" name="אוריינות מתמטית" fill="#0fb4f5" radius={[6, 6, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </Card>
 
       <div className="grid grid-cols-3 gap-5">
-        <Card title="ממוצע במחזור · שפת אם" tone="default">
+        <Card title="ממוצע במחזור · אוריינות שפתית" tone="default">
           <div className="text-5xl font-bold text-chotam-blue tracking-tight">{cohortAverages.language}</div>
           <div className="text-sm text-chotam-muted mt-2">ממוצע ארצי: <strong className="text-chotam-ink">{cohortAverages.national.language}</strong></div>
           <div className="mt-3 inline-flex items-center gap-1 text-xs text-chotam-warm font-medium">
@@ -339,7 +339,7 @@ function CohortTab() {
           </div>
         </Card>
 
-        <Card title="ממוצע במחזור · מתמטיקה" tone="default">
+        <Card title="ממוצע במחזור · אוריינות מתמטית" tone="default">
           <div className="text-5xl font-bold text-chotam-cyan tracking-tight">{cohortAverages.math}</div>
           <div className="text-sm text-chotam-muted mt-2">ממוצע ארצי: <strong className="text-chotam-ink">{cohortAverages.national.math}</strong></div>
           <div className="mt-3 inline-flex items-center gap-1 text-xs text-chotam-warm font-medium">
