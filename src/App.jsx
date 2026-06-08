@@ -3,11 +3,13 @@ import { TopNav } from './components/TopNav.jsx';
 import { DemoBanner } from './components/DemoBanner.jsx';
 import { AuthorityDashboard } from './pages/AuthorityDashboard.jsx';
 import { PrincipalDashboard } from './pages/PrincipalDashboard.jsx';
+import { MeasurementDashboard } from './pages/MeasurementDashboard.jsx';
 import { PlaceholderPage } from './pages/PlaceholderPage.jsx';
 
 const BREADCRUMBS = {
   authority: 'רשות לדוגמה · מבט מערכתי',
   school: 'בית ספר לדוגמה · מבט מנהלת',
+  measurement: 'מדידה והערכה · שפה, מתמטיקה ומדדי חותם',
   agent: 'סוכן חכם',
   admin: 'ניהול מערכת',
   institutions: 'ניהול מוסדות',
@@ -29,7 +31,10 @@ export default function App() {
       {view === 'school' && (
         <PrincipalDashboard onBackToAuthority={() => setView('authority')} />
       )}
-      {!['authority', 'school'].includes(view) && (
+      {view === 'measurement' && (
+        <MeasurementDashboard />
+      )}
+      {!['authority', 'school', 'measurement'].includes(view) && (
         <PlaceholderPage view={view} />
       )}
     </div>

@@ -325,3 +325,85 @@ export const principalActions = [
   { text: 'תאום סמינר חינוך חברתי לקיץ', urgent: false },
   { text: 'דיווח רבעוני לוועדת היגוי רשותית', urgent: false }
 ];
+
+// ============================================================
+// MEASUREMENT & EVALUATION (מדידה והערכה)
+// School-level academic data combined with Chotam metrics
+// ============================================================
+
+export const measurement = {
+  schoolId: 'ben-zvi',
+  asOf: 'Q2 · 2026',
+  sources: ['תנופה', 'מיצ"ב פנימי', 'מבחני בית ספר'],
+  current: {
+    languageAvg: 67,         // ציון ממוצע שפת אם
+    mathAvg: 61,             // ציון ממוצע מתמטיקה
+    aboveBasic: 76,          // % תלמידים מעל סף בסיסי
+    variance: 18             // שונות פנים-בית-ספרית (נקודות)
+  },
+  baseline: {
+    languageAvg: 54,
+    mathAvg: 49,
+    aboveBasic: 58,
+    variance: 27
+  },
+  target: {
+    languageAvg: 75,
+    mathAvg: 70,
+    aboveBasic: 86,
+    variance: 12
+  }
+};
+
+// Per-grade breakdown
+export const byGrade = [
+  { grade: 'ג\'', students: 58, language: 71, math: 66, climate: 4.2, teamResp: 4.0 },
+  { grade: 'ד\'', students: 62, language: 69, math: 63, climate: 4.1, teamResp: 4.1 },
+  { grade: 'ה\'', students: 55, language: 64, math: 58, climate: 4.0, teamResp: 4.1 },
+  { grade: 'ו\'', students: 60, language: 65, math: 60, climate: 4.0, teamResp: 4.2 }
+];
+
+// Distribution buckets
+export const distribution = {
+  language: [
+    { bucket: 'מתחת לסף', current: 14, baseline: 28 },
+    { bucket: 'בסיסי', current: 26, baseline: 31 },
+    { bucket: 'מתקדם', current: 36, baseline: 27 },
+    { bucket: 'מצוין', current: 24, baseline: 14 }
+  ],
+  math: [
+    { bucket: 'מתחת לסף', current: 18, baseline: 32 },
+    { bucket: 'בסיסי', current: 28, baseline: 30 },
+    { bucket: 'מתקדם', current: 34, baseline: 25 },
+    { bucket: 'מצוין', current: 20, baseline: 13 }
+  ]
+};
+
+// Year-on-year trend (4 years of cycle)
+export const yearTrend = [
+  { year: '2023', language: 54, math: 49, teamResp: 3.2, climate: 3.4, milestone: 'תחילת המחזור' },
+  { year: '2024', language: 58, math: 53, teamResp: 3.5, climate: 3.7, milestone: 'הקמת צוות מוביל' },
+  { year: '2025', language: 63, math: 58, teamResp: 3.9, climate: 4.0, milestone: 'הטמעת שגרות שבועיות' },
+  { year: '2026', language: 67, math: 61, teamResp: 4.1, climate: 4.1, milestone: 'קריאה משותפת של נתונים' }
+];
+
+// Correlation data: schools in cohort with their team metrics and achievement
+// Deterministic offsets for reproducible visuals
+const _ACH_OFFSETS = [1, -2, 1, 0, -1, 2, -1, 0, 1];
+export const cohortCorrelation = schools.map((s, i) => ({
+  name: s.name,
+  teamResp: s.pulse.teamResponsibility,
+  climate: s.pulse.climate,
+  parentEng: Math.round(s.pulse.parentEngagement * 50) / 10, // normalize to 0-5 scale
+  agency: s.pulse.agency,
+  language: Math.round(45 + (s.pulse.teamResponsibility - 3) * 12) + _ACH_OFFSETS[i],
+  math: Math.round(42 + (s.pulse.teamResponsibility - 3) * 11) + _ACH_OFFSETS[i],
+  students: s.studentCount
+}));
+
+// Cohort comparison summary
+export const cohortAverages = {
+  language: 60,
+  math: 56,
+  national: { language: 62, math: 58 }
+};

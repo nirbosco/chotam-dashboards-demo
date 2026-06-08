@@ -1,10 +1,12 @@
 import {
-  Building2, GraduationCap, Bell, Search, Bot, Settings, School, Link2, BookOpen, UserCog
+  Building2, GraduationCap, Bell, Search, Bot, Settings, School, Link2, BookOpen, UserCog,
+  LineChart
 } from 'lucide-react';
 
 const PRIMARY_TABS = [
   { id: 'authority', label: 'מבט רשות', icon: Building2 },
-  { id: 'school', label: 'מבט מנהלת', icon: GraduationCap }
+  { id: 'school', label: 'מבט מנהלת', icon: GraduationCap },
+  { id: 'measurement', label: 'מדידה והערכה', icon: LineChart }
 ];
 
 const SECONDARY_TABS = [
