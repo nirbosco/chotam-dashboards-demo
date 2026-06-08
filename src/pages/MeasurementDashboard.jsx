@@ -89,83 +89,56 @@ function KPIs() {
 function SchoolTab() {
   return (
     <div className="space-y-5">
-      <div className="grid grid-cols-5 gap-5">
-        <div className="col-span-2 space-y-5">
-          <Card title="התפלגות אוריינות שפתית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
-            <ResponsiveContainer width="100%" height={210}>
-              <BarChart data={distribution.language}>
-                <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
-                <XAxis dataKey="bucket" tick={{ fontSize: 11, fill: '#0a0a1a', fontFamily: 'Rubik', fontWeight: 500 }} />
-                <YAxis tick={{ fontSize: 11, fill: '#6b6b80', fontFamily: 'Rubik' }} unit="%" />
-                <Tooltip />
-                <Legend wrapperStyle={{ fontSize: 11, fontFamily: 'Rubik' }} />
-                <Bar dataKey="baseline" name="בסיס" fill="#dcdce5" radius={[6, 6, 0, 0]} />
-                <Bar dataKey="current" name="עכשיו" fill="#0046ff" radius={[6, 6, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </Card>
+      <div className="grid grid-cols-3 gap-5">
+        <Card title="התפלגות אוריינות שפתית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={distribution.language} margin={{ top: 8, right: 4, bottom: 8, left: 0 }}>
+              <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
+              <XAxis dataKey="bucket" tick={{ fontSize: 11, fill: '#0a0a1a', fontFamily: 'Rubik', fontWeight: 500 }} />
+              <YAxis tick={{ fontSize: 10, fill: '#6b6b80', fontFamily: 'Rubik' }} unit="%" width={36} />
+              <Tooltip />
+              <Legend wrapperStyle={{ fontSize: 11, fontFamily: 'Rubik' }} />
+              <Bar dataKey="baseline" name="בסיס" fill="#dcdce5" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="current" name="עכשיו" fill="#0046ff" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
 
-          <Card title="התפלגות אוריינות מתמטית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
-            <ResponsiveContainer width="100%" height={210}>
-              <BarChart data={distribution.math}>
-                <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
-                <XAxis dataKey="bucket" tick={{ fontSize: 11, fill: '#0a0a1a', fontFamily: 'Rubik', fontWeight: 500 }} />
-                <YAxis tick={{ fontSize: 11, fill: '#6b6b80', fontFamily: 'Rubik' }} unit="%" />
-                <Tooltip />
-                <Legend wrapperStyle={{ fontSize: 11, fontFamily: 'Rubik' }} />
-                <Bar dataKey="baseline" name="בסיס" fill="#dcdce5" radius={[6, 6, 0, 0]} />
-                <Bar dataKey="current" name="עכשיו" fill="#0fb4f5" radius={[6, 6, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </Card>
-        </div>
+        <Card title="התפלגות אוריינות מתמטית" subtitle="אחוז תלמידים בכל רמה, בסיס מול עכשיו">
+          <ResponsiveContainer width="100%" height={260}>
+            <BarChart data={distribution.math} margin={{ top: 8, right: 4, bottom: 8, left: 0 }}>
+              <CartesianGrid strokeDasharray="2 4" vertical={false} stroke="#dcdce5" />
+              <XAxis dataKey="bucket" tick={{ fontSize: 11, fill: '#0a0a1a', fontFamily: 'Rubik', fontWeight: 500 }} />
+              <YAxis tick={{ fontSize: 10, fill: '#6b6b80', fontFamily: 'Rubik' }} unit="%" width={36} />
+              <Tooltip />
+              <Legend wrapperStyle={{ fontSize: 11, fontFamily: 'Rubik' }} />
+              <Bar dataKey="baseline" name="בסיס" fill="#dcdce5" radius={[6, 6, 0, 0]} />
+              <Bar dataKey="current" name="עכשיו" fill="#0fb4f5" radius={[6, 6, 0, 0]} />
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
 
-        <Card title="פירוט לפי שכבה" subtitle="הקשר בין הישגי הלמידה לבין אייג'נסי תלמיד ושייכות לבית הספר ולשכבה" className="col-span-3">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-right text-[11px] text-chotam-muted border-b border-chotam-line uppercase tracking-wider">
-              <th className="font-medium pb-2 pr-2">שכבה</th>
-              <th className="font-medium pb-2">תלמידים</th>
-              <th className="font-medium pb-2">אוריינות שפתית</th>
-              <th className="font-medium pb-2">אוריינות מתמטית</th>
-              <th className="font-medium pb-2">אייג'נסי</th>
-              <th className="font-medium pb-2">שייכות</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Card title="פירוט לפי שכבה" subtitle="הישגי הלמידה לצד אייג'נסי ושייכות">
+          <div className="space-y-2.5">
             {byGrade.map((g) => (
-              <tr key={g.grade} className="border-b border-chotam-line/40 hover:bg-chotam-paper/60 transition-colors">
-                <td className="py-3 pr-2 font-bold text-chotam-blue text-lg">{g.grade}</td>
-                <td className="py-3 text-chotam-ink font-medium">{g.students}</td>
-                <td className="py-3">
-                  <span className="inline-flex items-center gap-2">
-                    <MiniBar value={g.language} color="bg-chotam-blue" />
-                    <span className="text-sm font-semibold text-chotam-ink">{g.language}</span>
-                  </span>
-                </td>
-                <td className="py-3">
-                  <span className="inline-flex items-center gap-2">
-                    <MiniBar value={g.math} color="bg-chotam-cyan" />
-                    <span className="text-sm font-semibold text-chotam-ink">{g.math}</span>
-                  </span>
-                </td>
-                <td className="py-3">
-                  <span className="inline-flex items-center gap-2">
-                    <MiniBar value={g.agency} color="bg-chotam-royal" max={5} />
-                    <span className="text-sm font-semibold text-chotam-ink">{g.agency}</span>
-                  </span>
-                </td>
-                <td className="py-3">
-                  <span className="inline-flex items-center gap-2">
-                    <MiniBar value={g.belonging} color="bg-chotam-violet" max={5} />
-                    <span className="text-sm font-semibold text-chotam-ink">{g.belonging}</span>
-                  </span>
-                </td>
-              </tr>
+              <div key={g.grade} className="rounded-chotamSm border border-chotam-line p-3 hover:bg-chotam-paper/50 transition-colors">
+                <div className="flex items-baseline justify-between mb-2.5">
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-lg font-bold text-chotam-blue">שכבה {g.grade}</span>
+                    <span className="text-xs text-chotam-muted">{g.students} תלמ'</span>
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-x-3 gap-y-2">
+                  <GradeStat label="אוריינות שפתית" value={g.language} color="bg-chotam-blue" />
+                  <GradeStat label="אוריינות מתמטית" value={g.math} color="bg-chotam-cyan" />
+                  <GradeStat label="אייג'נסי" value={g.agency} color="bg-chotam-royal" max={5} />
+                  <GradeStat label="שייכות" value={g.belonging} color="bg-chotam-violet" max={5} />
+                </div>
+              </div>
             ))}
-          </tbody>
-        </table>
-      </Card>
+          </div>
+        </Card>
+
       </div>
 
       <Card
@@ -371,6 +344,20 @@ function MiniBar({ value, color = 'bg-chotam-blue', max = 100 }) {
     <span className="inline-block w-20 h-2 bg-chotam-line rounded-full overflow-hidden align-middle">
       <span className={`block h-full ${color} transition-all`} style={{ width: `${(value / max) * 100}%` }} />
     </span>
+  );
+}
+
+function GradeStat({ label, value, color, max = 100 }) {
+  return (
+    <div>
+      <div className="flex items-baseline justify-between gap-1">
+        <span className="text-[10px] text-chotam-muted leading-tight">{label}</span>
+        <span className="text-sm font-bold text-chotam-ink">{value}</span>
+      </div>
+      <div className="h-1.5 bg-chotam-line rounded-full overflow-hidden mt-1">
+        <div className={`h-full ${color} rounded-full`} style={{ width: `${(value / max) * 100}%` }} />
+      </div>
+    </div>
   );
 }
 
